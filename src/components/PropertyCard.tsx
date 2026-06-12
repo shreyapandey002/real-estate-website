@@ -1,16 +1,7 @@
 import { MapPin, Bed, Bath, Ruler } from 'lucide-react'
+import type { PropertyListing } from '../types/property'
 
-interface PropertyCardProps {
-  image: string
-  title: string
-  price: string
-  location: string
-  beds: number
-  baths: number
-  area: string
-}
-
-export default function PropertyCard({ image, title, price, location, beds, baths, area }: PropertyCardProps) {
+export default function PropertyCard({ image, title, price, location, beds, baths, area }: PropertyListing) {
   return (
     <div className="bg-white rounded-lg overflow-hidden shadow-md card-hover">
       {/* Image */}
