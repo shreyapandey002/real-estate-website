@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { Send, X } from 'lucide-react'
+import ReactMarkdown from 'react-markdown'
+import remarkBreaks from 'remark-breaks'
+import remarkGfm from 'remark-gfm'
 
 type ChatMessage = {
   id: string
@@ -78,6 +81,56 @@ function extractAssistantMessage(data: unknown): string {
   }
 
   return 'I received a response, but it was not in a readable chat format.'
+}
+
+function MessageContent({ message }: { message: ChatMessage }) {
+  if (message.role === 'user') {
+    return <span className="whitespace-pre-wrap">{message.content}</span>
+  }
+
+  return (
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm, remarkBreaks]}
+      components={{
+        p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+        strong: ({ children }) => <strong className="font-semibold text-slate-950">{children}</strong>,
+        h1: ({ children }) => <h1 className="mb-2 text-base font-bold text-slate-950">{children}</h1>,
+        h2: ({ children }) => <h2 className="mb-2 text-sm font-bold text-slate-950">{children}</h2>,
+        h3: ({ children }) => <h3 className="mb-2 text-sm font-semibold text-slate-950">{children}</h3>,
+        ul: ({ children }) => <ul className="mb-2 list-disc space-y-1 pl-5 last:mb-0">{children}</ul>,
+        ol: ({ children }) => <ol className="mb-2 list-decimal space-y-1 pl-5 last:mb-0">{children}</ol>,
+        li: ({ children }) => <li className="pl-1">{children}</li>,
+        a: ({ children, href }) => (
+          <a
+            href={href}
+            target="_blank"
+            rel="noreferrer"
+            className="font-medium text-blue-700 underline underline-offset-2"
+          >
+            {children}
+          </a>
+        ),
+        code: ({ children }) => (
+          <code className="rounded bg-slate-100 px-1 py-0.5 text-[0.85em] text-slate-900">
+            {children}
+          </code>
+        ),
+        pre: ({ children }) => (
+          <pre className="mb-2 max-w-full overflow-x-auto rounded-md bg-slate-100 p-2 text-xs text-slate-900 last:mb-0">
+            {children}
+          </pre>
+        ),
+        blockquote: ({ children }) => (
+          <blockquote className="mb-2 border-l-4 border-blue-200 pl-3 text-slate-600 last:mb-0">
+            {children}
+          </blockquote>
+        ),
+        hr: () => <hr className="my-3 border-slate-200" />,
+      }}
+    >
+      {message.content}
+    </ReactMarkdown>
+  )
 }
 
 export default function ChatWidget() {
@@ -220,7 +273,7 @@ export default function ChatWidget() {
                         : 'border border-slate-200 bg-white text-slate-800'
                     }`}
                   >
-                    {message.content}
+                    <MessageContent message={message} />
                   </div>
                 </div>
               ))}
