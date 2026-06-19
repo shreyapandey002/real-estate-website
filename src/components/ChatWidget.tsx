@@ -11,7 +11,7 @@ type ChatMessage = {
 }
 
 const LANGFLOW_ENDPOINT =
-  'https://agent-builder.nhtech.link/api/v1/run/b759b072-9efc-464c-8f7c-3f5b00571731?stream=false'
+  'https://agent-builder.nhtech.link/api/v1/run/d136d56b-a208-4300-b732-bebd3ccd2d7d'
 
 const LANGFLOW_API_KEY = 'sk--iN-2r48-_jzW7_OYoSEu2qsHXetZkrKycs5m8evb3Y'
 const SESSION_STORAGE_KEY = 'real-estate-agent-session-id'
