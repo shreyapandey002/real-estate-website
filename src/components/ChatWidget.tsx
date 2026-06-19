@@ -139,7 +139,7 @@ export default function ChatWidget() {
     {
       id: createId(),
       role: 'assistant',
-      content: 'Hi! I can help you find homes, compare listings, or answer questions about this property demo.',
+      content: 'Hi I am Sales Documentaion Automation Agent and I will help with your bookings, document generation and sending emails.',
     },
   ])
   const [inputValue, setInputValue] = useState('')
